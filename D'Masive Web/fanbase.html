@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D'Masiv — Web Profile &amp; Fanbase</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="shared.css" />
+<style>
+  :root {
+    --fb-orange: #f5a800;
+    --fb-text: #555;
+    /* GANTI dengan foto personil: url('images/dmasiv-bg.jpg') */
+    --hero-img: none;
+  }
+  /* font header disamakan dengan halaman About */
+  .logo { font-family: 'Oswald', 'Arial Narrow', sans-serif; }
+  .topbar, .navbar .nav-links a { font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif; }
+  /* reset hanya untuk area Be a Fans, supaya header (shared.css) tidak ikut berubah */
+  .hero, .hero * { box-sizing: border-box; margin: 0; padding: 0; }
+  .hero { color: var(--fb-text); font-family: inherit; }
+  :where(.hero) a { text-decoration: none; color: inherit; }
+
+  
+
+
+  /* ===== HERO / BACKGROUND ===== */
+  .hero {
+    position: relative; min-height: calc(100vh - 114px); padding: 4rem 1rem 5rem;
+    background-color: #bdbdbd;
+    background-image:
+      linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.35)),
+      var(--hero-img),
+      radial-gradient(ellipse at 50% 20%, #f2f2f2 0%, #a8a8a8 70%, #7d7d7d 100%);
+    background-size: cover; background-position: center top; background-repeat: no-repeat;
+    filter: grayscale(1);
+  }
+  .hero > * { filter: none; }
+  .hero { isolation: isolate; }
+
+  .title { text-align: center; color: #fff; }
+  .title h1 { font-weight: 400; font-size: 2.2rem; letter-spacing: .06em; text-shadow: 0 1px 6px rgba(0,0,0,.25); }
+  .tagline { text-align: center; color: var(--fb-orange); font-weight: 700; font-size: 1.35rem;
+             margin: 3.2rem auto 3rem; padding: 0 1rem; }
+
+
+
+  /* ===== FORM ===== */
+  .card {
+    width: min(720px, 100%); margin: 0 auto; padding: 1.6rem 1.4rem 1.4rem;
+    background: rgba(255,255,255,.82); border: 2px solid var(--fb-orange); border-radius: 8px;
+    backdrop-filter: blur(2px);
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.4rem; }
+  .full { grid-column: 1 / -1; }
+  label.lbl { display: block; font-weight: 700; font-size: 1.15rem; color: #666; margin-bottom: .5rem; }
+  input[type=text], input[type=email], input[type=tel], input[type=url], input[type=date], select {
+    width: 100%; height: 38px; padding: 0 .8rem; font: inherit; font-size: .9rem; color: #444;
+    background: rgba(255,255,255,.7); border: 1px solid #cfcfcf; border-radius: 2px;
+  }
+  input::placeholder { color: #8a8a8a; padding-left: .5rem; }
+  input:focus, select:focus { outline: 2px solid var(--fb-orange); outline-offset: 0; border-color: var(--fb-orange); }
+  .radios { display: flex; gap: 1.2rem; align-items: center; height: 38px; font-size: 1.15rem; color: #666; }
+  .radios label { display: flex; align-items: center; gap: .4rem; cursor: pointer; }
+  .radios input { accent-color: var(--fb-orange); width: 16px; height: 16px; }
+  .addr { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: .4rem; }
+  .actions { display: flex; justify-content: space-between; align-items: center;
+             border-top: 1px solid #ddd; margin-top: 1.4rem; padding-top: 1.4rem; }
+  .btn { font: inherit; font-weight: 700; font-size: .95rem; border-radius: 999px; padding: .55rem 1rem; cursor: pointer; }
+  .btn-reset { background: #f6f6f6; color: #333; border: 1px solid #ccc; }
+  .btn-submit { background: #e9a21a; color: #fff; border: 0; padding: .6rem 1.1rem; }
+  .btn:hover { filter: brightness(.95); }
+  .btn:focus-visible { outline: 2px solid #333; outline-offset: 2px; }
+  .msg { margin-top: 1rem; padding: .7rem 1rem; border-radius: 4px; font-weight: 700; display: none; }
+  .msg.ok { display: block; background: #e8f6e8; color: #276a27; }
+  .msg.err { display: block; background: #fdeaea; color: #a22; }
+
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 640px) {
+    .grid, .addr { grid-template-columns: 1fr; }
+    .tagline { font-size: 1.1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body data-page="fans">
+
+<!-- TOP BAR -->
+    <div class="topbar">
+        <span>Follow Us</span>
+        <a href="https://www.facebook.com/dmasivband" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/DMASIV" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/dmasiv?igsh=MWxwdjdhNW85N3RsdA==" target="_blank"><i
+                class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@dmasivbandofficial?si=_iknEBoi1T_FTSZV" target="_blank"><i
+                class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a class="logo" href="index.html">D'MASIV</a>
+        <ul class="nav-links">
+            <li><a href="event/index.html">Event</a></li>
+            <li><a href="Galery page/gallery.html">Gallery</a></li>
+            <li><a href="album lagu/album.html">Album</a></li>
+            <li><a href="shop/shop.html">Shop</a></li>
+            <li><a href="About page/about.html">About</a></li>
+            <li><a href="../index.html" class="nav-cta">Home</a></li>
+        </ul>
+    </nav>
+
+<main class="hero">
+  <div class="title">
+    <h1>BE A FANS!</h1>
+  </div>
+  <p class="tagline">Silahkan Isi Form Untuk Mendaftar sebagai Fans</p>
+
+  <form class="card" id="fanForm" novalidate>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+    <div class="grid">
+      <div class="full">
+        <label class="lbl" for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" placeholder="Fullname" required>
+      </div>
+
+      <div>
+        <span class="lbl" id="jkLabel">Jenis Kelamin</span>
+        <div class="radios" role="radiogroup" aria-labelledby="jkLabel">
+          <label><input type="radio" name="gender" value="Pria"> Pria</label>
+          <label><input type="radio" name="gender" value="Wanita"> Wanita</label>
+        </div>
+      </div>
+      <div>
+        <label class="lbl" for="tgl">Tanggal Lahir</label>
+        <input type="date" id="tgl" name="tgl_lahir">
+      </div>
+
+      <div class="full">
+        <span class="lbl">Alamat</span>
+        <div class="addr">
+          <select id="provinsi" name="provinsi" aria-label="Provinsi"></select>
+          <select id="kota" name="kota" aria-label="Kabupaten / Kota">
+            <option value="">-- Pilih Kab/ Kota --</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="lbl" for="email">Alamat Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+      </div>
+      <div>
+        <label class="lbl" for="telp">No. Telepon</label>
+        <input type="tel" id="telp" name="telepon" placeholder="08xxxx" inputmode="numeric">
+      </div>
+
+      <div>
+        <label class="lbl" for="sosmed">Social Media</label>
+        <input type="url" id="sosmed" name="sosmed" placeholder="URL Social Media">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="reset" class="btn btn-reset">Reset</button>
+      <button type="submit" class="btn btn-submit">Submit</button>
+    </div>
+    <div class="msg" id="msg" role="status"></div>
+  </form>
+</main>
+
+<script>
+  /* ---- Data wilayah (daftar provinsi/kota tidak ada di database; alamat disimpan ke kolom fans.alamat sebagai "Kota, Provinsi") ---- */
+  const wilayah = {
+    "NANGGROE ACEH DARUSSALAAM": ["Banda Aceh", "Sabang", "Aceh Besar", "Lhokseumawe"],
+    "SUMATERA UTARA": ["Medan", "Binjai", "Pematangsiantar", "Deli Serdang"],
+    "DKI JAKARTA": ["Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur"],
+    "JAWA BARAT": ["Bandung", "Bekasi", "Bogor", "Depok", "Cimahi"],
+    "JAWA TENGAH": ["Semarang", "Solo", "Magelang", "Tegal"],
+    "DI YOGYAKARTA": ["Yogyakarta", "Sleman", "Bantul"],
+    "JAWA TIMUR": ["Surabaya", "Malang", "Kediri", "Sidoarjo"],
+    "KALIMANTAN BARAT": ["Pontianak", "Singkawang", "Kubu Raya", "Mempawah"],
+    "BALI": ["Denpasar", "Badung", "Gianyar"],
+    "SULAWESI SELATAN": ["Makassar", "Parepare", "Gowa"]
+  };
+
+  const prov = document.getElementById('provinsi');
+  const kota = document.getElementById('kota');
+
+  function fillProvinsi() {
+    prov.innerHTML = '';
+    Object.keys(wilayah).forEach(p => prov.add(new Option(p, p)));
+    fillKota();
+  }
+  function fillKota() {
+    kota.innerHTML = '';
+    kota.add(new Option('-- Pilih Kab/ Kota --', ''));
+    (wilayah[prov.value] || []).forEach(k => kota.add(new Option(k, k)));
+  }
+  window.fillKota = fillKota;
+  prov.addEventListener('change', fillKota);
+  fillProvinsi();
+
+  /* Pengiriman form (reset, validasi, POST ke api/fans.php) ditangani js/dmasiv.js */
+</script>
+<script src="js/config.js"></script>
+<script src="js/dmasiv.js"></script>
+</body>
+</html>

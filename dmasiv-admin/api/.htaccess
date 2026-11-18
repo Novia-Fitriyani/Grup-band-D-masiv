@@ -1,0 +1,4 @@
+# Endpoint api hanya boleh dibuka lewat nama file php yang ada; file bantu (awalan _) tidak untuk diakses langsung
+<FilesMatch "^_">
+  Require all denied
+</FilesMatch>

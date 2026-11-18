@@ -1,0 +1,396 @@
+/* ── HERO ── */
+.hero {
+    width: 90%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+}
+
+.line {
+    width: 80px;
+    height: 4px;
+    background: var(--orange);
+    margin: auto;
+}
+
+/* ── CONTENT LAYOUT ── */
+.content {
+    width: 90%;
+    margin: 60px auto;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+    width: 260px;
+}
+
+.sidebar h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+}
+
+.sidebar ul {
+    list-style: none;
+    background: white;
+    border: 1px solid #ddd;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #eee;
+}
+
+.sidebar ul li:last-child {
+    border-bottom: none;
+}
+
+.sidebar ul li label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.sidebar ul li label:hover {
+    background: #fafafa;
+}
+
+.sidebar ul li label span {
+    background: #999;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+}
+
+/* Sembunyikan radio, tapi tetap bisa di-fokus dengan keyboard */
+.cat-radio {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+/* Highlight kategori yang sedang aktif (kelas .active diatur js/dmasiv.js; kategori berasal dari database) */
+.sidebar label.active {
+    background: var(--orange);
+    color: white;
+}
+
+.sidebar label.active span {
+    background: white !important;
+    color: var(--orange) !important;
+}
+
+/* ── EVENT LIST ── */
+.event {
+    flex: 1;
+}
+
+/* Semua grup event disembunyikan dulu... */
+.event-group {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* ...lalu hanya grup kategori yang aktif yang ditampilkan */
+.event-group.active {
+    display: grid;
+}
+
+.card {
+    background: white;
+    border: 2px solid var(--orange);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+}
+
+.card h3 {
+    padding: 25px 20px 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+}
+
+.card p {
+    padding: 0 20px;
+    color: #777;
+    font-size: 15px;
+}
+
+.card small {
+    padding: 0 20px;
+    color: #999;
+    font-size: 13px;
+}
+
+.card a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #fafafa;
+    border-top: 1px solid #ddd;
+    color: var(--orange);
+    font-weight: bold;
+    padding: 15px;
+    transition: .3s;
+}
+
+.card a:hover {
+    background: var(--orange);
+    color: white;
+}
+
+.card i {
+    font-size: 40px;
+    color: var(--orange);
+    padding: 25px 20px 10px;
+}
+
+.card:hover i {
+    transform: scale(1.1);
+    transition: .3s;
+}
+
+/* ── PAGINATION (belum dipakai, disiapkan kalau nanti perlu) ── */
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.pagination a {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: white;
+    border: 1px solid #ddd;
+    color: #333;
+    transition: .3s;
+}
+
+.pagination a:hover {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+}
+
+.pagination .current {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+}
+
+/* ── EMPTY STATE (untuk kategori tanpa event) ── */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    background: white;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+}
+
+.empty-state i {
+    font-size: 40px;
+    color: #ccc;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.empty-state p {
+    font-size: 15px;
+}
+
+/* ── MODAL DETAIL EVENT (CSS-only pakai :target) ── */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    z-index: 999;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+.modal:target {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.modal-box {
+    background: #fff;
+    width: 600px;
+    max-width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 24px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #222;
+}
+
+.modal-close {
+    color: #999;
+    font-size: 24px;
+    text-decoration: none;
+    line-height: 1;
+    transition: .3s;
+}
+
+.modal-close:hover {
+    color: var(--orange);
+}
+
+.modal-body {
+    padding: 0 24px;
+}
+
+.modal-row {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+}
+
+.modal-row:last-child {
+    border-bottom: none;
+}
+
+.modal-label {
+    width: 110px;
+    flex-shrink: 0;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-sep {
+    width: 20px;
+    flex-shrink: 0;
+    color: #999;
+}
+
+.modal-value {
+    color: #666;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .event-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .event-group {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .card {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 640px) {
+    .modal-box {
+        width: 100%;
+    }
+
+    .modal-label {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        width: 95%;
+    }
+
+    .hero {
+        width: 95%;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .card h3 {
+        font-size: 18px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    .card small {
+        font-size: 12px;
+    }
+}
